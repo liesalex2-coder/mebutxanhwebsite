@@ -1,0 +1,567 @@
+/* =====================================================
+   GLOBALS.CSS - CSS VANILLA POUR MEBUTXANHWEBSITE
+   Basé sur la roadmap de reconstruction Next.js
+   ===================================================== */
+
+/* Variables CSS */
+:root {
+  /* Couleurs principales */
+  --bg-primary: #fff6ea;              /* Background principal */
+  --header-bg: #edd5b7;               /* Background header */
+  --card-bg: #ffffff;                 /* Background cards */
+  
+  /* Textes */
+  --text-primary: #1f2937;            /* Titres principaux */
+  --text-secondary: #374151;          /* Textes navigation */
+  --text-muted: #6b7280;              /* Descriptions */
+  --text-light: #9ca3af;              /* Textes très légers */
+  
+  /* Bordures et séparateurs */
+  --border-light: #e5e7eb;            /* Bordures cards */
+  --border-medium: #d1d5db;           /* Bordures plus marquées */
+  --border-footer: #e2e8f0;           /* Bordure footer */
+  
+  /* Boutons et actions */
+  --button-green: #059669;            /* Boutons verts */
+  --button-green-hover: #047857;      /* Hover boutons verts */
+  --button-youtube: #dc2626;          /* Bouton YouTube */
+  --button-tiktok: #000000;           /* Bouton TikTok */
+  
+  /* Overlays et effets */
+  --overlay-dark: rgba(0, 0, 0, 0.2); /* Overlay vidéos */
+  --overlay-hover: rgba(0, 0, 0, 0.3);/* Overlay hover */
+  --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Reset et base */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+}
+
+/* =====================================================
+   SYSTÈME DE CONTAINERS UNIFIÉ
+   ===================================================== */
+
+.container {
+  max-width: 1280px;  /* Équivalent max-w-5xl */
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .container { 
+    padding: 0 2rem; 
+  }
+}
+
+/* =====================================================
+   TYPOGRAPHIE
+   ===================================================== */
+
+/* Titres principaux */
+.title-large {
+  font-size: 2.25rem;    /* text-4xl */
+  font-weight: 700;      /* font-bold */
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+.title-medium {
+  font-size: 1.875rem;   /* text-3xl */
+  font-weight: 700;      /* font-bold */
+  line-height: 1.3;
+  color: var(--text-primary);
+}
+
+.title-small {
+  font-size: 1.5rem;     /* text-2xl */
+  font-weight: 700;      /* font-bold */
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+
+/* Navigation et logo */
+.logo-text {
+  font-size: 1.25rem;    /* text-xl */
+  font-weight: 700;      /* font-bold */
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.nav-link {
+  font-size: 1rem;       /* text-base */
+  font-weight: 500;      /* font-medium */
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+}
+
+/* Contenus */
+.body-text {
+  font-size: 1rem;       /* text-base */
+  font-weight: 400;      /* font-normal */
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+.description-text {
+  font-size: 1rem;       /* text-base */
+  font-weight: 400;      /* font-normal */
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.small-text {
+  font-size: 0.875rem;   /* text-sm */
+  font-weight: 400;      /* font-normal */
+  color: var(--text-muted);
+}
+
+/* Cards et vignettes */
+.card-title {
+  font-size: 1rem;       /* text-base */
+  font-weight: 600;      /* font-semibold */
+  line-height: 1.4;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.card-subtitle {
+  font-size: 0.75rem;    /* text-xs */
+  font-weight: 400;      /* font-normal */
+  color: var(--text-muted);
+}
+
+/* =====================================================
+   LAYOUT PRINCIPAL
+   ===================================================== */
+
+/* Header */
+.header {
+  background-color: var(--header-bg);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 0;                         /* py-6 équivalent */
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;                               /* gap-2 équivalent */
+}
+
+.nav {
+  display: flex;
+  gap: 2rem;                                 /* gap-8 équivalent */
+}
+
+/* Bannière */
+.banner {
+  background-color: var(--bg-primary);
+}
+
+.banner-container {
+  padding: 1.5rem 0;                         /* py-6 équivalent */
+}
+
+/* Main content */
+main {
+  background-color: var(--bg-primary);
+}
+
+/* Footer */
+.footer {
+  background-color: white;
+  border-top: 1px solid var(--border-footer);
+  margin-top: 4rem;                          /* mt-16 équivalent */
+  padding: 2rem 0;                           /* py-8 équivalent */
+  text-align: center;
+}
+
+/* =====================================================
+   GRILLES ET CARDS
+   ===================================================== */
+
+/* Grille page d'accueil - 2 colonnes */
+.home-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;                                 /* gap-8 équivalent */
+  margin-bottom: 3rem;                       /* mb-12 équivalent */
+  width: 100%;
+  padding: 0;
+}
+
+@media (min-width: 1024px) {
+  .home-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Grille BD - 4 colonnes responsive */
+.bd-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;                               /* gap-6 équivalent */
+  margin-bottom: 3rem;
+  width: 100%;
+  padding: 0;
+  box-sizing: border-box;                    /* Important pour calcul largeur */
+}
+
+@media (min-width: 640px) {
+  .bd-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .bd-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;                            /* Réduire légèrement le gap sur desktop */
+  }
+}
+
+/* Grille clips - 3 colonnes responsive */
+.clips-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;                               /* gap-6 équivalent */
+  margin-bottom: 3rem;
+  width: 100%;
+  padding: 0;
+  box-sizing: border-box;                    /* Important pour calcul largeur */
+}
+
+@media (min-width: 640px) {
+  .clips-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .clips-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;                            /* Réduire légèrement le gap sur desktop */
+  }
+}
+
+/* Cards générales */
+.content-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow-light);
+  transition: all 200ms ease;
+  overflow: hidden;
+  box-sizing: border-box;                    /* Assurer que border est inclus */
+}
+
+.content-card:hover {
+  box-shadow: var(--shadow-medium);
+  border-color: var(--border-medium);
+  transform: translateY(-2px);
+}
+
+/* Supprimer tous les surlignages dans les cards */
+.content-card a,
+.home-card a {
+  text-decoration: none !important;
+  color: inherit;
+}
+
+.content-card a:hover,
+.home-card a:hover {
+  text-decoration: none !important;
+  color: inherit;
+}
+
+.content-card *,
+.home-card * {
+  text-decoration: none !important;
+}
+
+/* Cards page d'accueil */
+.home-card {
+  padding: 2rem;                             /* p-8 équivalent */
+  box-sizing: border-box;
+}
+
+/* Cards BD et clips */
+.grid-card {
+  padding: 1rem;                             /* p-4 équivalent */
+  box-sizing: border-box;
+}
+
+/* =====================================================
+   IMAGES ET MÉDIAS
+   ===================================================== */
+
+/* Images générales */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Images dans grilles - hover général */
+.grid-image {
+  transition: transform 200ms ease;
+  border-radius: 0.5rem;
+  width: 100%;
+  height: auto;
+}
+
+.grid-image:hover {
+  transform: scale(1.05);
+}
+
+/* Images BD spécifiques */
+.bd-image-container {
+  padding: 0.75rem;                          /* p-3 équivalent */
+  aspect-ratio: 1/1;                         /* Format carré */
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+.bd-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 200ms ease;
+  border-radius: 0.5rem;
+}
+
+.bd-image:hover {
+  transform: scale(1.1);
+}
+
+/* Images clips avec overlay */
+.clips-image-container {
+  position: relative;
+  aspect-ratio: 16/9;                        /* Format vidéo */
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+.clips-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.clips-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--overlay-dark);
+  transition: background-color 200ms ease;
+}
+
+.clips-overlay:hover {
+  background-color: var(--overlay-hover);
+}
+
+.play-button-circle {
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--button-youtube);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.125rem;
+  transition: all 200ms ease;
+  border: none;
+  cursor: pointer;
+}
+
+.play-button-circle:hover {
+  transform: scale(1.1);
+  background-color: #b91c1c;
+}
+
+/* =====================================================
+   BOUTONS
+   ===================================================== */
+
+/* Boutons principaux */
+.button-green {
+  background-color: var(--button-green);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 200ms ease;
+  cursor: pointer;
+}
+
+.button-green:hover {
+  background-color: var(--button-green-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4);
+}
+
+.button-green:active {
+  transform: translateY(0);
+}
+
+/* Boutons sociaux */
+.social-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.button-youtube {
+  background-color: var(--button-youtube);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 200ms ease;
+}
+
+.button-youtube:hover {
+  background-color: #b91c1c;
+  transform: translateY(-1px);
+}
+
+.button-tiktok {
+  background-color: var(--button-tiktok);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 200ms ease;
+}
+
+.button-tiktok:hover {
+  background-color: #374151;
+  transform: translateY(-1px);
+}
+
+/* =====================================================
+   ESPACEMENTS UTILITAIRES
+   ===================================================== */
+
+/* Sections principales */
+.section-spacing { 
+  margin-bottom: 3rem;                       /* mb-12 équivalent */
+}
+
+.large-spacing { 
+  margin-bottom: 4rem;                       /* mb-16 équivalent */
+}
+
+/* Éléments de contenu */
+.title-spacing { 
+  margin-bottom: 1.5rem;                     /* mb-6 équivalent */
+}
+
+.text-spacing { 
+  margin-bottom: 1rem;                       /* mb-4 équivalent */
+}
+
+.card-spacing { 
+  margin-bottom: 2rem;                       /* mb-8 équivalent */
+}
+
+/* =====================================================
+   RESPONSIVE NAVIGATION
+   ===================================================== */
+
+@media (max-width: 767px) {
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .nav {
+    gap: 1rem;
+  }
+  
+  .nav-link {
+    font-size: 0.875rem;
+  }
+}
+
+/* =====================================================
+   ACCESSIBILITÉ ET FOCUS
+   ===================================================== */
+
+.focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* États focus pour navigation */
+.nav-link:focus {
+  color: var(--text-primary);
+  outline: none;
+}
+
+/* États focus pour boutons */
+.button-green:focus,
+.button-youtube:focus,
+.button-tiktok:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* =====================================================
+   UTILITIES
+   ===================================================== */
+
+.text-center {
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 639px) {
+  .hidden-mobile {
+    display: none;
+  }
+}
