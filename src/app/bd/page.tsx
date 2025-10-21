@@ -1,60 +1,48 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import Img from "../ImgWithFallback";
-import { comics } from "./data";
-import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "Truyện tranh thiếu nhi",
-  description: "Bộ sưu tập truyện tranh thiếu nhi với những câu chuyện ấm áp, minh họa rõ ràng, chữ to dễ đọc. Phù hợp để cha mẹ kể cùng con và nuôi dưỡng thói quen đọc.",
-  keywords: [
-    "truyện tranh thiếu nhi",
-    "truyện cho bé",
-    "Bánh Bao Cánh Cụt",
-    "truyện gia đình",
-    "đọc truyện cho bé",
-    "minh họa trẻ em",
-    "giáo dục qua truyện"
-  ],
-  openGraph: {
-    title: 'Truyện tranh thiếu nhi | Mẹ Bút Xanh',
-    description: 'Những câu chuyện ấm áp với minh họa rõ ràng, chữ to dễ đọc cho trẻ em.',
-    url: '/bd',
-    type: 'website',
-  },
-  alternates: {
-    canonical: '/bd',
-  },
+  title: "Truyện tranh thiếu nhi - Mẹ Bút Xanh",
+  description: "Bộ sưu tập truyện tranh thiếu nhi với những câu chuyện ấm áp, minh họa rõ ràng, chữ to dễ đọc.",
 };
 
-export default function BdListPage() {
-  return (
-    <div className="mx-auto max-w-5xl px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Truyện tranh</h1>
+// Liste des BD avec nom de dossier et titre d'affichage
+const bdList = [
+  { folder: "cai-bong-ky-quac", title: "Cái Bóng Kỳ Quác" },
+  { folder: "cai-goi-biet-ngay", title: "Cái Gối Biết Ngày" },
+  { folder: "cay-cau-bi-gay", title: "Cây Cầu Bị Gãy" },
+  { folder: "chiec-ba-lo-ky-quac", title: "Chiếc Ba Lô Kỳ Quác" },
+  { folder: "chiec-banh-mi-biet-chay", title: "Chiếc Bánh Mì Biết Chạy" },
+  { folder: "chiec-guong-ma-thuat", title: "Chiếc Gương Ma Thuật" },
+  { folder: "cuocphieuluumoi", title: "Cuộc Phiêu Lưu Mới" },
+  { folder: "tieng-vong-bi-an", title: "Tiếng Vọng Bí Ẩn" },
+];
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-        {comics.map((c) => (
-          <Link
-            key={c.slug}
-            href={`/bd/${c.slug}`}
-            className="group rounded-xl border border-neutral-200/70 bg-white shadow-sm overflow-hidden block hover:shadow-md transition"
-          >
-            <div className="relative aspect-square w-full flex items-center justify-center">
-              <div className="w-3/4 h-3/4 relative">
-                <Img
-                  src={c.cover}
-                  alt={c.title}
-                  fill
-                  className="object-cover rounded group-hover:scale-110 transition"
-                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
-                  priority
+export default function BDPage() {
+  return (
+    <div className="section-spacing">
+      <h1 className="title-medium title-spacing text-center">
+        Truyện tranh thiếu nhi
+      </h1>
+      
+      <p className="description-text text-center text-spacing">
+        Những câu chuyện ấm áp, minh họa rõ ràng, chữ to dễ đọc — phù hợp để ba mẹ kể cùng con.
+      </p>
+
+      <div className="bd-grid">
+        {bdList.map((bd, index) => (
+          <Link key={index} href={`/bd/${bd.folder}`}>
+            <div className="content-card grid-card">
+              <div className="bd-image-container">
+                <img
+                  src={`/bd/${bd.folder}/cover_9x16.webp`}
+                  alt={bd.title}
+                  className="bd-image"
                 />
               </div>
-            </div>
-
-            <div className="p-3 flex flex-col items-center">
-              <div className="w-3/4 text-center">
-                <h2 className="font-semibold text-sm leading-tight">{c.title}</h2>
-                <p className="text-xs text-neutral-600 mt-1 line-clamp-2">{c.summary}</p>
+              <div>
+                <h3 className="card-title">{bd.title}</h3>
+                <p className="card-subtitle">Truyện ngắn thiếu nhi</p>
               </div>
             </div>
           </Link>

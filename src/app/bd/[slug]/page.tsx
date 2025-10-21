@@ -1,98 +1,140 @@
+import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import Img from "../../ImgWithFallback";
-import { getComicBySlug } from "../data";
-import type { Metadata } from 'next'
 
-interface PageProps {
-  params: Promise<{ slug: string }>;
+// Données des BD avec génération automatique des pages
+const bdData = {
+  "cai-bong-ky-quac": {
+    title: "Cái Bóng Kỳ Quác",
+    description: "Câu chuyện về một cái bóng kỳ lạ và những cuộc phiêu lưu thú vị.",
+    maxPages: 6 // 00.webp à 05.webp
+  },
+  "cai-goi-biet-ngay": {
+    title: "Cái Gối Biết Ngày",
+    description: "Truyện về chiếc gối thần kỳ biết dự đoán ngày mai.",
+    maxPages: 6 // Estimé, ajustez selon vos fichiers
+  },
+  "cay-cau-bi-gay": {
+    title: "Cây Cầu Bị Gãy", 
+    description: "Câu chuyện về cây cầu và tình bạn.",
+    maxPages: 6
+  },
+  "chiec-ba-lo-ky-quac": {
+    title: "Chiếc Ba Lô Kỳ Quác",
+    description: "Cuộc phiêu lưu với chiếc ba lô ma thuật.",
+    maxPages: 6
+  },
+  "chiec-banh-mi-biet-chay": {
+    title: "Chiếc Bánh Mì Biết Chạy",
+    description: "Truyện cười về chiếc bánh mì nghịch ngợm.",
+    maxPages: 6
+  },
+  "chiec-guong-ma-thuat": {
+    title: "Chiếc Gương Ma Thuật",
+    description: "Bí ẩn xung quanh chiếc gương kỳ diệu.",
+    maxPages: 6
+  },
+  "cuocphieuluumoi": {
+    title: "Cuộc Phiêu Lưu Mới",
+    description: "Những cuộc phiêu lưu đầy màu sắc của các nhân vật.",
+    maxPages: 6
+  },
+  "tieng-vong-bi-an": {
+    title: "Tiếng Vọng Bí Ẩn", 
+    description: "Khám phá bí ẩn của những tiếng vọng từ xa.",
+    maxPages: 6
+  }
+};
+
+// Fonction pour générer les noms de pages automatiquement
+function generatePages(maxPages: number): string[] {
+  return Array.from({ length: maxPages }, (_, i) => 
+    `${i.toString().padStart(2, '0')}.webp`
+  );
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+type Props = {
+  params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const comic = getComicBySlug(slug);
+  const bd = bdData[slug as keyof typeof bdData];
   
-  if (!comic) {
+  if (!bd) {
     return {
-      title: 'Truyện không tìm thấy',
-      description: 'Truyện tranh bạn tìm kiếm không có sẵn.',
+      title: "Truyện không tìm thấy - Mẹ Bút Xanh"
     };
   }
 
-  const title = `${comic.title} - Truyện tranh thiếu nhi`;
-  const description = `${comic.summary}. Đọc truyện tranh thiếu nhi "${comic.title}" với minh họa đẹp và nội dung giáo dục phù hợp cho gia đình.`;
-
   return {
-    title: comic.title,
-    description,
-    keywords: [
-      comic.title,
-      "truyện tranh thiếu nhi",
-      "truyện cho bé",
-      "Bánh Bao Cánh Cụt",
-      "giáo dục trẻ em",
-      "truyện gia đình",
-      comic.slug
-    ],
-    openGraph: {
-      title,
-      description: comic.summary,
-      url: `/bd/${comic.slug}`,
-      type: 'article',
-      images: [
-        {
-          url: comic.cover,
-          width: 600,
-          height: 800,
-          alt: comic.title,
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description: comic.summary,
-      images: [comic.cover],
-    },
-    alternates: {
-      canonical: `/bd/${comic.slug}`,
-    },
+    title: `${bd.title} - Mẹ Bút Xanh`,
+    description: bd.description,
   };
 }
 
-export default async function ComicPage({ params }: PageProps) {
+export default async function BDPage({ params }: Props) {
   const { slug } = await params;
-  const comic = getComicBySlug(slug);
-  if (!comic) return notFound();
+  const bd = bdData[slug as keyof typeof bdData];
+
+  // Si la BD n'existe pas, afficher 404
+  if (!bd) {
+    notFound();
+  }
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6 text-center">{comic.title}</h1>
+    <div className="section-spacing">
+      {/* Navigation retour */}
+      <div className="text-spacing">
+        <Link href="/bd" className="nav-link">
+          ← Quay lại truyện tranh
+        </Link>
+      </div>
 
-      <div className="space-y-6">
-        {comic.pages.map((src, i) => (
-          <div key={src} className="flex justify-center">
-            <div className="relative w-full max-w-2xl">
-              <Img
-                src={src}
-                alt={`${comic.title} — page ${i + 1}`}
-                width={800}
-                height={1200}
-                className="w-full h-auto max-h-screen object-contain shadow-lg rounded-lg"
-                priority={i === 0}
-              />
-            </div>
+      {/* Titre et description */}
+      <h1 className="title-medium title-spacing text-center">
+        {bd.title}
+      </h1>
+      
+      <p className="description-text text-center text-spacing">
+        {bd.description}
+      </p>
+
+      {/* Pages de la BD */}
+      <div className="bd-reader">
+        {generatePages(bd.maxPages).map((page, index) => (
+          <div key={index} className="bd-page">
+            <img
+              src={`/bd/${slug}/${page}`}
+              alt={`${bd.title} - Trang ${index + 1}`}
+              style={{
+                width: '100%',
+                maxWidth: '600px',
+                height: 'auto',
+                margin: '0 auto',
+                display: 'block',
+                borderRadius: '0.5rem',
+                boxShadow: 'var(--shadow-medium)',
+                marginBottom: '1rem'
+              }}
+            />
           </div>
         ))}
       </div>
-      
-      <div className="mt-8 text-center">
-        <a
-          href="/bd"
-          className="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition"
-        >
-          ← Quay lại truyện tranh
-        </a>
+
+      {/* Navigation entre BD */}
+      <div className="text-center" style={{ marginTop: '3rem' }}>
+        <Link href="/bd" className="button-green">
+          Xem tất cả truyện tranh
+        </Link>
       </div>
     </div>
   );
+}
+
+// Générer les routes statiques pour toutes les BD
+export async function generateStaticParams() {
+  return Object.keys(bdData).map((slug) => ({
+    slug,
+  }));
 }
