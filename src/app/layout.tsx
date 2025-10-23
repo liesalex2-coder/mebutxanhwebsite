@@ -4,8 +4,40 @@ import Image from "next/image";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Mẹ Bút Xanh - Truyện tranh và video ca nhạc thiếu nhi",
+  title: {
+    default: "Mẹ Bút Xanh - Truyện tranh và video ca nhạc thiếu nhi",
+    template: "%s | Mẹ Bút Xanh"
+  },
   description: "Một không gian đọc, nghe và xem dành cho gia đình. Chúng tôi tạo ra những bộ truyện tranh và video ca nhạc thiếu nhi rõ nét, hiện đại để cha mẹ và con cái cùng thưởng thức.",
+  keywords: ['truyện tranh thiếu nhi', 'video ca nhạc trẻ em', 'giáo dục trẻ em', 'truyện tranh việt nam', 'ca nhạc thiếu nhi'],
+  authors: [{ name: 'Mẹ Bút Xanh' }],
+  creator: 'Mẹ Bút Xanh',
+  publisher: 'Mẹ Bút Xanh',
+  metadataBase: new URL('https://mebutxanh.com'),
+  openGraph: {
+    type: 'website',
+    locale: 'vi_VN',
+    url: 'https://mebutxanh.com',
+    siteName: 'Mẹ Bút Xanh',
+    title: 'Mẹ Bút Xanh - Truyện tranh và video ca nhạc thiếu nhi',
+    description: 'Bộ sưu tập truyện tranh và video ca nhạc giáo dục cho trẻ em',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Mẹ Bút Xanh',
+    description: 'Truyện tranh và video ca nhạc thiếu nhi',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -13,8 +45,33 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // JSON-LD pour l'organisation (GEO optimisé)
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Mẹ Bút Xanh',
+    url: 'https://mebutxanh.com',
+    logo: 'https://mebutxanh.com/Branding/banner.webp',
+    description: 'Truyện tranh và video ca nhạc giáo dục cho trẻ em Việt Nam',
+    sameAs: [
+      'https://www.youtube.com/@MeButXanhkechuyen',
+      'https://www.tiktok.com/@mebutxanhkechuyen'
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'Customer Service',
+      availableLanguage: ['Vietnamese']
+    }
+  };
+
   return (
     <html lang="vi">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body>
         {/* Header */}
         <header className="header">

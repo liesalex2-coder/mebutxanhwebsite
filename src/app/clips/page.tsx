@@ -1,66 +1,161 @@
-import type { Metadata } from "next";
+// src/app/clips/page.tsx
+'use client';
 
-export const metadata: Metadata = {
-  title: "Video ca nhạc thiếu nhi - Mẹ Bút Xanh",
-  description: "Tuyển chọn ca nhạc thiếu nhi trong trẻo, sôi động và vui nhộn.",
-};
-
-// Liste des clips avec nom de dossier et titre d'affichage
-const clips = [
-  { folder: "cong-chua-mong-mo", title: "Cong Chua Mong Mo" },
-  { folder: "congchua-ngua-thanky", title: "Congchua Ngua Thanky" },
-  { folder: "cong-chua-nho-va-giac-mo", title: "Cong Chua Nho Va Giac Mo" },
-  { folder: "cong-chua-va-chu-rong-nho", title: "Cong Chua Va Chu Rong Nho" },
-  { folder: "cong-chua-va-ngoi-sao-sang", title: "Cong Chua Va Ngoi Sao Sang" },
-  { folder: "cong-chua-va-phep-mau-trong-rung", title: "Cong Chua Va Phep Mau Trong Rung" },
-  { folder: "cong-chua-va-song-than-ky", title: "Cong Chua Va Song Than Ky" },
-  { folder: "cong-chua-va-the-gioi-mo-mong", title: "Cong Chua Va The Gioi Mo Mong" },
-  { folder: "khu-vuon-phep-mau", title: "Khu Vuon Phep Mau" },
-  { folder: "khu-vuon-than-tien-lung-linh", title: "Khu Vuon Than Tien Lung Linh" },
-];
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { getClips, urlFor, ClipData } from '@/lib/sanity';
 
 export default function ClipsPage() {
-  return (
-    <div className="section-spacing">
-      <h1 className="title-medium title-spacing text-center">
-        Video ca nhạc thiếu nhi
-      </h1>
-      
-      <p className="description-text text-center text-spacing">
-        Những bài hát thiếu nhi hiện đại, trong trẻo và sôi động, giúp trẻ vừa nghe vừa học.
-      </p>
+  const [clips, setClips] = useState<ClipData[]>([]);
+  const [loading, setLoading] = useState(true);
 
-      <div className="clips-grid">
-        {clips.map((clip, index) => (
-          <a 
-            key={index}
-            href="https://www.youtube.com/@MeButXanhkechuyen" 
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <div className="content-card grid-card">
-              <div className="clips-image-container">
-                <img
-                  src={`/clips/${clip.folder}/${clip.folder}_thumb.webp`}
-                  alt={clip.title}
-                  style={{ 
-                    width: '100%', 
-                    height: '100%', 
-                    objectFit: 'cover',
-                    borderRadius: '0.5rem'
-                  }}
-                />
-                <div className="clips-overlay">
-                  <button className="play-button-circle">▶</button>
-                </div>
-              </div>
-              <div>
-                <h3 className="card-title">{clip.title}</h3>
-              </div>
-            </div>
-          </a>
-        ))}
+  useEffect(() => {
+    async function fetchClips() {
+      try {
+        const data = await getClips();
+        setClips(data);
+      } catch (error) {
+        console.error('Erreur chargement clips:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchClips();
+  }, []);
+
+  // JSON-LD pour SEO/GEO
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Video Ca Nhạc Thiếu Nhi',
+    description: 'Bộ sưu tập video ca nhạc giáo dục cho trẻ em',
+    publisher: {
+      '@type': 'Organization',
+      name: 'Mẹ Bút Xanh',
+      url: 'https://mebutxanh.com',
+    },
+    inLanguage: 'vi',
+    numberOfItems: clips.length,
+  };
+
+  if (loading) {
+    return (
+      <div style={{ padding: '3rem', textAlign: 'center' }}>
+        <p>Chargement des vidéos...</p>
       </div>
-    </div>
+    );
+  }
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      <div style={{ padding: '3rem 0' }}>
+        <h1 className="title-large" style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          Video Ca Nhạc
+        </h1>
+        
+        <div className="clips-grid">
+          {clips.map((clip) => (
+            <article 
+              key={clip._id} 
+              className="content-card"
+              itemScope 
+              itemType="https://schema.org/VideoObject"
+            >
+              <div className="clips-image-container">
+                <Image
+                  src={urlFor(clip.thumbnail).width(800).url()}
+                  alt={`${clip.title} - Video ca nhạc thiếu nhi`}
+                  fill
+                  className="clips-image"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  itemProp="thumbnailUrl"
+                />
+                
+                {clip.videoType === 'youtube' && clip.youtubeUrl && (
+                  <a 
+                    href={clip.youtubeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="clips-overlay"
+                    itemProp="embedUrl"
+                  >
+                    <button className="play-button-circle" aria-label={`Xem ${clip.title} trên YouTube`}>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </button>
+                  </a>
+                )}
+                
+                {clip.videoType === 'tiktok' && clip.tiktokUrl && (
+                  <a 
+                    href={clip.tiktokUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="clips-overlay"
+                    itemProp="embedUrl"
+                  >
+                    <button 
+                      className="play-button-circle" 
+                      style={{ backgroundColor: '#000000' }}
+                      aria-label={`Xem ${clip.title} trên TikTok`}
+                    >
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </button>
+                  </a>
+                )}
+              </div>
+              
+              <div className="grid-card">
+                <h2 className="card-title" style={{ marginBottom: '0.5rem' }} itemProp="name">
+                  {clip.title}
+                </h2>
+                
+                {clip.description && (
+                  <p 
+                    className="description-text" 
+                    style={{ fontSize: '0.875rem', marginBottom: '0.5rem' }}
+                    itemProp="description"
+                  >
+                    {clip.description}
+                  </p>
+                )}
+                
+                <div style={{ marginTop: '0.5rem' }}>
+                  {clip.videoType === 'youtube' && (
+                    <span className="card-subtitle" style={{ 
+                      color: '#dc2626', 
+                      fontWeight: 600,
+                      textTransform: 'uppercase'
+                    }}>
+                      ▶ YouTube
+                    </span>
+                  )}
+                  {clip.videoType === 'tiktok' && (
+                    <span className="card-subtitle" style={{ 
+                      color: '#000000', 
+                      fontWeight: 600,
+                      textTransform: 'uppercase'
+                    }}>
+                      🎵 TikTok
+                    </span>
+                  )}
+                </div>
+                
+                <meta itemProp="uploadDate" content="2025-01-01" />
+                <meta itemProp="inLanguage" content="vi" />
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </>
   );
 }

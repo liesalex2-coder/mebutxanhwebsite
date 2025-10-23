@@ -1,0 +1,68 @@
+/* src/app/bd/[slug]/detail.module.css */
+
+.container {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  color: #2563eb;
+  font-weight: 500;
+  text-decoration: none;
+  margin-bottom: 2rem;
+  transition: color 0.3s ease;
+}
+
+.backLink:hover {
+  color: #1e40af;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #1f2937;
+}
+
+.pagesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.pageWrapper {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.pageImage {
+  position: relative;
+  width: 100%;
+  padding-bottom: 133.33%; /* Ratio 3:4 */
+}
+
+.returnContainer {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.returnButton {
+  display: inline-block;
+  background-color: #2563eb;
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.returnButton:hover {
+  background-color: #1e40af;
+}
