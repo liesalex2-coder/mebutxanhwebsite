@@ -56,7 +56,7 @@ export default function Home() {
               overflow: 'hidden'
             }}>
               <Image
-                src="/bd/cai-bong-ky-quac/cover_9x16.webp"
+                src="/bd/thumbnail-default.webp"
                 alt="Truyện tranh thiếu nhi - Giáo dục và giải trí"
                 fill
                 style={{ objectFit: 'cover' }}
