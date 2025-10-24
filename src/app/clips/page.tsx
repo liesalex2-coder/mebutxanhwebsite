@@ -1,29 +1,10 @@
 // src/app/clips/page.tsx
-'use client';
-
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { getClips, urlFor, ClipData } from '@/lib/sanity';
+import { getClips, urlFor } from '@/lib/sanity';
 
-export default function ClipsPage() {
-  const [clips, setClips] = useState<ClipData[]>([]);
-  const [loading, setLoading] = useState(true);
+export default async function ClipsPage() {
+  const clips = await getClips();
 
-  useEffect(() => {
-    async function fetchClips() {
-      try {
-        const data = await getClips();
-        setClips(data);
-      } catch (error) {
-        console.error('Erreur chargement clips:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchClips();
-  }, []);
-
-  // JSON-LD pour SEO/GEO
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
@@ -37,14 +18,6 @@ export default function ClipsPage() {
     inLanguage: 'vi',
     numberOfItems: clips.length,
   };
-
-  if (loading) {
-    return (
-      <div style={{ padding: '3rem', textAlign: 'center' }}>
-        <p>Chargement des vidéos...</p>
-      </div>
-    );
-  }
 
   return (
     <>
