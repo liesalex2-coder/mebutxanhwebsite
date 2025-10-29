@@ -1,0 +1,45 @@
+# ai.txt - Directives pour les crawlers IA
+# Site: Mẹ Bút Xanh
+# URL: https://www.mebutxanh.com
+
+# OpenAI (ChatGPT)
+User-agent: GPTBot
+Allow: /
+Allow: /bd/
+Allow: /clips/
+
+# Anthropic (Claude)
+User-agent: Claude-Web
+Allow: /
+Allow: /bd/
+Allow: /clips/
+
+User-agent: anthropic-ai
+Allow: /
+
+# Google (AI Overviews)
+User-agent: Google-Extended
+Allow: /
+Allow: /bd/
+Allow: /clips/
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+Allow: /bd/
+Allow: /clips/
+
+# Tous les autres crawlers IA
+User-agent: *
+Allow: /
+Disallow: /studio
+Disallow: /_next/
+
+# Informations du site
+Site-Name: Mẹ Bút Xanh
+Site-Description: Nền tảng giáo dục trực tuyến cung cấp truyện tranh và ca nhạc thiếu nhi Việt Nam cho trẻ 3-12 tuổi
+Site-Language: vi-VN
+Content-License: All Rights Reserved
+
+# Lien vers sitemap
+Sitemap: https://www.mebutxanh.com/sitemap.xml
