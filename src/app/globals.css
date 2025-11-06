@@ -565,3 +565,108 @@ img {
     display: none;
   }
 }
+/* =====================================================
+   ACCESSIBILITÉ - AMÉLIORATIONS WCAG 2.1 AA
+   ===================================================== */
+
+/* Skip link pour navigation clavier */
+.skip-link {
+  position: fixed;
+  left: -9999px;
+  top: 0;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background-color: #4CAF50;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  min-height: auto !important;
+  min-width: auto !important;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible,
+.skip-link:focus-within {
+  left: 50% !important;
+  top: 10px !important;
+  transform: translateX(-50%) !important;
+  outline: 3px solid #ffffff !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+
+.skip-link:focus {
+  left: 50%;
+  top: 10px;
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+
+}
+
+/* Focus visible pour tous les éléments interactifs */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid #4CAF50;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Supprime l'outline au clic de souris, garde pour clavier */
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Focus spécial pour les liens de navigation */
+.nav-link:focus-visible {
+  outline: 3px solid #4CAF50;
+  background-color: rgba(76, 175, 80, 0.1);
+  outline-offset: 4px;
+}
+
+/* Zones de clic minimales 44x44px (WCAG) */
+button,
+a,
+.button-green,
+.button-youtube,
+.button-tiktok {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Support prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Screen Reader Only - pour H2 cachés visuellement mais lisibles par lecteurs d'écran */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
