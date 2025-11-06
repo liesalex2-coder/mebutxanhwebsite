@@ -1,30 +1,59 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  // Optimisation des images Next.js
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
   images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+      },
+    ],
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60,
   },
-  
-  // Compression Gzip/Brotli activée
+
   compress: true,
-  
-  // Minification avec SWC (plus rapide que Terser)
-  swcMinify: true,
-  
-  // Désactiver le header x-powered-by pour sécurité
   poweredByHeader: false,
   
-  // Désactiver les source maps en production (réduit la taille)
-  productionBrowserSourceMaps: false,
-  
-  // Headers HTTP pour cache agressif
   async headers() {
     return [
       {
-        // Cache des assets statiques Next.js (JS, CSS)
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+          },
+          {
+            key: 'X-AI-Indexing',
+            value: 'allow',
+          },
+          {
+            key: 'X-GPTBot',
+            value: 'allow',
+          },
+          {
+            key: 'X-Claude-Web',
+            value: 'allow',
+          },
+          {
+            key: 'X-Google-Extended',
+            value: 'allow',
+          },
+        ],
+      },
+      {
+        source: '/ai.txt',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'text/plain; charset=utf-8',
+          },
+        ],
+      },
+      {
         source: '/_next/static/:path*',
         headers: [
           {
@@ -34,17 +63,6 @@ const nextConfig = {
         ],
       },
       {
-        // Cache des images
-        source: '/images/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      {
-        // Cache de toutes les images (svg, jpg, png, webp, avif, gif)
         source: '/:all*(svg|jpg|jpeg|png|webp|avif|gif)',
         headers: [
           {
@@ -54,7 +72,6 @@ const nextConfig = {
         ],
       },
       {
-        // Cache des fichiers dans /bd/ et /clips/
         source: '/(bd|clips)/:path*',
         headers: [
           {
@@ -65,14 +82,6 @@ const nextConfig = {
       },
     ];
   },
-  
-  // Optimisations expérimentales
-  experimental: {
-    // Optimise le CSS (enlève le CSS inutilisé)
-    optimizeCss: true,
-    // Optimise les imports de packages
-    optimizePackageImports: ['@/components'],
-  },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
