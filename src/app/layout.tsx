@@ -13,11 +13,14 @@ export const metadata: Metadata = {
   authors: [{ name: 'Mẹ Bút Xanh' }],
   creator: 'Mẹ Bút Xanh',
   publisher: 'Mẹ Bút Xanh',
-  metadataBase: new URL('https://mebutxanh.com'),
+  metadataBase: new URL('https://www.mebutxanh.com'),
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     type: 'website',
     locale: 'vi_VN',
-    url: 'https://mebutxanh.com',
+    url: 'https://www.mebutxanh.com',
     siteName: 'Mẹ Bút Xanh',
     title: 'Mẹ Bút Xanh - Truyện tranh và video ca nhạc thiếu nhi',
     description: 'Bộ sưu tập truyện tranh và video ca nhạc giáo dục cho trẻ em',
@@ -45,13 +48,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // JSON-LD pour l'organisation (GEO optimisé)
+  // JSON-LD pour l'organisation (SEO/AEO optimisé)
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Mẹ Bút Xanh',
-    url: 'https://mebutxanh.com',
-    logo: 'https://mebutxanh.com/Branding/banner.webp',
+    url: 'https://www.mebutxanh.com',
+    logo: 'https://www.mebutxanh.com/Branding/banner.webp',
     description: 'Truyện tranh và video ca nhạc giáo dục cho trẻ em Việt Nam',
     sameAs: [
       'https://www.youtube.com/@MeButXanhkechuyen',
@@ -73,24 +76,55 @@ export default function RootLayout({
         />
       </head>
       <body>
-        {/* Header */}
-        <header className="header">
+        {/* Skip link pour accessibilité clavier - géré par CSS */}
+        <a 
+          href="#main-content"
+          className="skip-link"
+          tabIndex={0}
+        >
+          Bỏ qua đến nội dung chính
+        </a>
+
+        {/* Header avec balises sémantiques */}
+        <header className="header" role="banner">
           <div className="container">
             <div className="header-content">
-              <Link href="/" className="logo logo-text">
-                🌸 Mẹ Bút Xanh
+              <Link 
+                href="/" 
+                className="logo logo-text"
+                aria-label="Trang chủ Mẹ Bút Xanh"
+              >
+                <span aria-hidden="true">🌸</span> Mẹ Bút Xanh
               </Link>
-              <nav className="nav">
-                <Link href="/" className="nav-link">
+              
+              {/* Navigation avec ARIA */}
+              <nav 
+                className="nav" 
+                role="navigation" 
+                aria-label="Navigation chính"
+              >
+                <Link 
+                  href="/" 
+                  className="nav-link"
+                >
                   Trang chủ
                 </Link>
-                <Link href="/bd" className="nav-link">
+                <Link 
+                  href="/bd" 
+                  className="nav-link"
+                >
                   Truyện tranh
                 </Link>
-                <Link href="/clips" className="nav-link">
+                <Link 
+                  href="/clips" 
+                  className="nav-link"
+                >
                   Video ca nhạc
                 </Link>
-                <Link href="/lien-he" className="nav-link">
+                <Link 
+                  href="/lien-he" 
+                  className="nav-link"
+                >
                   Liên hệ
                 </Link>
               </nav>
@@ -98,15 +132,16 @@ export default function RootLayout({
           </div>
         </header>
 
-        {/* Bannière avec image */}
-        <div className="banner">
+        {/* Bannière avec figure sémantique */}
+        <section className="banner" aria-label="Bannière trang web">
           <div className="container">
             <div className="banner-container">
-              <div style={{ 
+              <figure style={{ 
                 width: '100%', 
                 display: 'flex', 
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                margin: 0
               }}>
                 <Image
                   src="/Branding/banner.webp"
@@ -120,50 +155,60 @@ export default function RootLayout({
                     borderRadius: '0.5rem'
                   }}
                 />
-              </div>
+              </figure>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Contenu principal */}
-        <main>
+        {/* Contenu principal avec balise main */}
+        <main id="main-content" role="main">
           <div className="container">
             {children}
           </div>
         </main>
 
-        {/* Footer */}
-        <footer className="footer">
+        {/* Footer avec balise sémantique */}
+        <footer className="footer" role="contentinfo">
           <div className="container">
             {/* Call to action */}
-            <section className="section-spacing">
-              <h3 className="title-small">Tham gia cùng Mẹ Bút Xanh!</h3>
+            <section className="section-spacing" aria-labelledby="cta-heading">
+              <h3 id="cta-heading" className="title-small">
+                Tham gia cùng Mẹ Bút Xanh!
+              </h3>
               <p className="description-text text-spacing">
                 Hãy theo dõi chúng tôi để nhận truyện tranh và video ca nhạc mới mỗi tuần — miễn phí, an toàn cho trẻ em.
               </p>
-              <div className="social-buttons">
+              
+              {/* Liens sociaux avec ARIA */}
+              <nav 
+                className="social-buttons" 
+                role="navigation" 
+                aria-label="Liên kết mạng xã hội"
+              >
                 <a 
                   href="https://www.youtube.com/@MeButXanhkechuyen" 
                   className="button-youtube"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Xem kênh YouTube của chúng tôi (mở trong tab mới)"
                 >
-                  ▶ Xem trên YouTube
+                  <span aria-hidden="true">▶</span> Xem trên YouTube
                 </a>
                 <a 
                   href="https://www.tiktok.com/@mebutxanhkechuyen" 
                   className="button-tiktok"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Theo dõi TikTok của chúng tôi (mở trong tab mới)"
                 >
-                  🎵 Theo dõi TikTok
+                  <span aria-hidden="true">🎵</span> Theo dõi TikTok
                 </a>
-              </div>
+              </nav>
             </section>
             
             {/* Copyright */}
-            <p className="small-text">
-              © 2025 Truyện tranh & Video ca nhạc thiếu nhi
+            <p className="small-text" role="contentinfo">
+              <small>© 2025 Truyện tranh & Video ca nhạc thiếu nhi</small>
             </p>
           </div>
         </footer>
