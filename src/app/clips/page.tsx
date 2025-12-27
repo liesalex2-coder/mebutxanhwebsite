@@ -122,7 +122,7 @@ export default async function ClipsPage() {
                   )}
                 </div>
                 
-                <meta itemProp="uploadDate" content="2025-01-01" />
+                <meta itemProp="uploadDate" content="2025-01-01T00:00:00+07:00" />
                 <meta itemProp="inLanguage" content="vi" />
               </div>
             </article>
@@ -131,4 +131,5 @@ export default async function ClipsPage() {
       </div>
     </>
   );
+
 }
