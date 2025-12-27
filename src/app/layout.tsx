@@ -215,6 +215,25 @@ export default function RootLayout({
             <p className="small-text" role="contentinfo">
               <small>© 2025 Truyện tranh & Video ca nhạc thiếu nhi</small>
             </p>
+            
+            {/* Crédit développeur */}
+            <p className="small-text" style={{ marginTop: '0.5rem' }}>
+              <small>
+                Trang web được tạo bởi{' '}
+                <a 
+                  href="https://www.leadingstarai.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ 
+                    color: '#059669',
+                    textDecoration: 'underline'
+                  }}
+                  aria-label="LeadingStarAI - Nhà phát triển trang web (mở trong tab mới)"
+                >
+                  LeadingStarAI
+                </a>
+              </small>
+            </p>
           </div>
         </footer>
       </body>
